@@ -1,0 +1,196 @@
+{
+  "users": {
+    "dawwa": {
+      "passwordHash": "$2b$10$idctgdAvRlgd9gnnNnm/zumnIkwGqsgwRuvyACHID0l4qnmNq58Vu"
+    },
+    "1234wad": {
+      "passwordHash": "$2b$10$Sg.skSkufG5uvAcL28OVnOu40eJOyEfpfcg81b6h4NjM4I12n38.K"
+    },
+    "Mert Erdihan": {
+      "passwordHash": "$2b$10$EzTc9jqxSnxb06A1MwxbL.okjO/Q6gyIpqqiGCKZ88dHTevkK/ct6"
+    },
+    "dawdwa": {
+      "passwordHash": "$2b$10$Xd8ja81GlMGLtoLfc2QWWuCWrZ3C1XoqlUoNBekEKVdx7AiqISTEW"
+    },
+    "Mert Erdihandwad": {
+      "passwordHash": "$2b$10$qxbNOzOgso6ulMAQB90GUurUb7crKJ0EVvKWAQjFEe23qpuQeWYkW"
+    },
+    "testuser": {
+      "passwordHash": "$2b$10$Uxsp4/LM2ocIbs4AcAWg3OTFJ9qIgIlgUdd2fEyWXX4/fe630kEbm"
+    },
+    "dwadwa": {
+      "passwordHash": "$2b$10$QBoKRV5IT34Sh1KQfmCRMu5cx0zPu8CiZ6zKMV69ydcqx3Dm0t3.a"
+    }
+  },
+  "rooms": {
+    "3P3D8P": {
+      "users": [
+        {
+          "id": "Hzr5JioMEJLwsLD9AAAJ",
+          "username": "Anon",
+          "role": "admin",
+          "avatar": "A",
+          "lastSeen": "2026-03-07T19:26:41.734Z",
+          "joined": "2026-03-07T19:26:41.734Z"
+        }
+      ],
+      "pinnedMessage": null,
+      "isGroup": false,
+      "name": "dwadaw",
+      "createdAt": "2026-03-07T19:26:41.734Z",
+      "settings": {
+        "notifications": true,
+        "sound": true,
+        "archive": false
+      },
+      "msgCount": 1
+    },
+    "CSBWJE": {
+      "users": [
+        {
+          "id": "QYyTzO_dvfnEndHoAAAF",
+          "username": "Mert Erdihan",
+          "role": "admin",
+          "avatar": "M",
+          "lastSeen": "2026-03-07T20:21:48.631Z",
+          "joined": "2026-03-07T20:21:48.631Z"
+        },
+        {
+          "id": "VGsHsY0BCUlEDSPpAAAH",
+          "username": "dwadwa",
+          "role": "user",
+          "avatar": "D",
+          "lastSeen": "2026-03-07T20:22:00.257Z",
+          "joined": "2026-03-07T20:22:00.257Z"
+        }
+      ],
+      "pinnedMessage": null,
+      "isGroup": false,
+      "name": "wadadwa",
+      "createdAt": "2026-03-07T20:21:48.631Z",
+      "settings": {
+        "notifications": true,
+        "sound": true,
+        "archive": false
+      },
+      "msgCount": 4
+    }
+  },
+  "messages": {
+    "3P3D8P": [
+      {
+        "id": 1,
+        "userId": "Hzr5JioMEJLwsLD9AAAJ",
+        "username": "Anon",
+        "message": "6099e3f9551b27e2aae9c236:kXDm9pwyLUMoQjaVyYEDGCASn1I=",
+        "timestamp": "2026-03-07T19:27:31.432Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "Hzr5JioMEJLwsLD9AAAJ",
+            "timestamp": "2026-03-07T19:27:31.432Z"
+          }
+        ],
+        "replyTo": null
+      }
+    ],
+    "CSBWJE": [
+      {
+        "id": 2,
+        "userId": "VGsHsY0BCUlEDSPpAAAH",
+        "username": "dwadwa",
+        "message": "05a5e3d9222b3abee91ec489:55evG+NveH8eTLRt3WKg462Re22z5nE3",
+        "timestamp": "2026-03-07T20:22:03.149Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "VGsHsY0BCUlEDSPpAAAH",
+            "timestamp": "2026-03-07T20:22:03.149Z"
+          }
+        ],
+        "replyTo": null
+      },
+      {
+        "id": 3,
+        "userId": "QYyTzO_dvfnEndHoAAAF",
+        "username": "Mert Erdihan",
+        "message": "bf333021ca08576cc86f52f3:/lAJUiVWNNfjzkzbA7X7p8A/V3RfbQ==",
+        "timestamp": "2026-03-07T20:22:07.023Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "QYyTzO_dvfnEndHoAAAF",
+            "timestamp": "2026-03-07T20:22:07.023Z"
+          }
+        ],
+        "replyTo": null
+      },
+      {
+        "id": 4,
+        "userId": "VGsHsY0BCUlEDSPpAAAH",
+        "username": "dwadwa",
+        "message": "e9a4ee8dc22e84c6980bca64:6Xu5FjRjEqT0wysBkmilxVyNN9cWTcT1ydf2WQI=",
+        "timestamp": "2026-03-07T20:22:14.045Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "VGsHsY0BCUlEDSPpAAAH",
+            "timestamp": "2026-03-07T20:22:14.045Z"
+          }
+        ],
+        "replyTo": null
+      },
+      {
+        "id": 5,
+        "userId": "QYyTzO_dvfnEndHoAAAF",
+        "username": "Mert Erdihan",
+        "message": "83363ad3fba08355b99cb7a8:KI2TQpBg3MToBJBQgTAc7lgK8M/1pQOHNxSP",
+        "timestamp": "2026-03-07T20:22:20.159Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "QYyTzO_dvfnEndHoAAAF",
+            "timestamp": "2026-03-07T20:22:20.159Z"
+          }
+        ],
+        "replyTo": null
+      }
+    ]
+  },
+  "messageId": 5
+}

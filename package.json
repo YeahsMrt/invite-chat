@@ -1,0 +1,31 @@
+{
+  "name": "invite-chat",
+  "version": "2.0.0",
+  "description": "Gerçek zamanlı, davet kodu tabanlı modern sohbet uygulaması",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "socket.io",
+    "real-time",
+    "messaging",
+    "invite-code"
+  ],
+  "author": "Mert Erdihan",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}
