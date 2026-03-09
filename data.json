@@ -26,6 +26,9 @@
     },
     "Mert Erdiha": {
       "passwordHash": "$2b$10$oHNAD771towoKCxLzXl5b.UbtXuv8p.zmXeTYbxZ5rhVLSZLPu1RO"
+    },
+    "90ıop*-": {
+      "passwordHash": "$2b$10$9OVINLj4ESR2dX68smfzjOFZbIIh1PYfT.8FCT2ZOmVuYc4WJ/O82"
     }
   },
   "rooms": {
@@ -154,6 +157,28 @@
         "archive": false
       },
       "msgCount": 9
+    },
+    "6KUW26": {
+      "users": [
+        {
+          "id": "j-wRVmZk_gHtB-ciAAAF",
+          "username": "90ıop*-",
+          "role": "admin",
+          "avatar": "9",
+          "lastSeen": "2026-03-09T06:43:29.120Z",
+          "joined": "2026-03-09T06:43:29.120Z"
+        }
+      ],
+      "pinnedMessage": null,
+      "isGroup": false,
+      "name": "eq2q2e",
+      "createdAt": "2026-03-09T06:43:29.120Z",
+      "settings": {
+        "notifications": true,
+        "sound": true,
+        "archive": false
+      },
+      "msgCount": 2
     }
   },
   "messages": {
@@ -583,7 +608,53 @@
         ],
         "replyTo": null
       }
+    ],
+    "6KUW26": [
+      {
+        "id": 20,
+        "userId": "j-wRVmZk_gHtB-ciAAAF",
+        "username": "90ıop*-",
+        "message": "a3b47182381ba604332ad648:eIyNM3z/gn+khagl0om56aaAuPpuQrQ=",
+        "timestamp": "2026-03-09T06:43:32.687Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "j-wRVmZk_gHtB-ciAAAF",
+            "timestamp": "2026-03-09T06:43:32.687Z"
+          }
+        ],
+        "replyTo": null
+      },
+      {
+        "id": 21,
+        "userId": "j-wRVmZk_gHtB-ciAAAF",
+        "username": "90ıop*-",
+        "message": "29311378dc1e12a1824cdec0:vZkew5C86zuaLkMczi7QoRnmxViQYCjtvQ==",
+        "timestamp": "2026-03-09T06:43:35.424Z",
+        "image": null,
+        "viewOnce": false,
+        "file": null,
+        "location": null,
+        "forwarded": false,
+        "edited": false,
+        "reactions": {},
+        "status": "read",
+        "readBy": [
+          {
+            "userId": "j-wRVmZk_gHtB-ciAAAF",
+            "timestamp": "2026-03-09T06:43:35.424Z"
+          }
+        ],
+        "replyTo": null
+      }
     ]
   },
-  "messageId": 19
+  "messageId": 21
 }
