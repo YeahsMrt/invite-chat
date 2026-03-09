@@ -1,5 +1,7 @@
 // avoid auto-connecting before user is authenticated
-const socket = io("http://localhost:3000", { 
+// determine API URL (static fallback for localhost)
+const API_URL = (typeof window !== 'undefined' && (window._env_?.API_URL || window.CONFIG?.API_URL)) || "http://localhost:3000";
+const socket = io(API_URL, { 
   autoConnect: false,
   reconnection: true,
   reconnectionDelay: 1000,

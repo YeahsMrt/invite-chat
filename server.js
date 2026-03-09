@@ -8,9 +8,11 @@ const fs = require('fs');
 
 const app = express();
 const server = http.createServer(app);
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
+
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: FRONTEND_ORIGIN,
     methods: ["GET", "POST"],
     credentials: true,
     allowedHeaders: ["Content-Type"]

@@ -155,6 +155,36 @@ PORT=3001 npm start
 
 MIT License - Açık kaynak olarak kullanılabilir
 
-## 👨‍💻 Geliştirici
+## �️ Deployment & Cloud
+
+Bu uygulamayı Vercel'de frontend, başka bir platformda backend olarak çalıştırabilirsiniz. Vercel sunucusuz yapısı nedeniyle Socket.io doğrudan desteklenmez; bu yüzden backend'i Render/Railway/Heroku gibi hizmetlere koyup frontend'i Vercel'e dağıtmak en sağlıklısı.
+
+1. **Backend**
+   - GitHub reposundan bir Web Service oluşturun (Render.com gibi).
+   - Ortam değişkeni `FRONTEND_ORIGIN` ile frontend URL'sini verin.
+   - `start` komutu: `node server.js`.
+   - Kullanılan port otomatik olarak verilir.
+
+2. **Frontend (Vercel)**
+   - Projeyi Vercel'e bağlayın.
+   - Framework Preset: `Other`.
+   - Build gerekmiyor, sadece `public/` içeriğini dağıtacak.
+   - Ortam değişkeni `NEXT_PUBLIC_API_URL` ile backend URL'sini ayarlayın.
+   - `client.js` içerisindeki Socket.io bağlantısını bu değişkene göre ayarlayın.
+
+3. **Config Değişikliği**
+   - `server.js` zaten `FRONTEND_ORIGIN` env değişkenini okuyor.
+   - `client.js`'de başlangıçta API_URL kontrolü ekleyin:
+     ```js
+     const API_URL = window._env_?.API_URL || "http://localhost:3000";
+     const socket = io(API_URL, { ... });
+     ```
+
+4. **Veritabanı**
+   - `data.json` üretimde uygun değil; yerine MongoDB, SQLite veya başka bir servis kullanın.
+
+---
+
+## �👨‍💻 Geliştirici
 
 Davet Kodlu Chat v2.0 - 2026
