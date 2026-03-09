@@ -1002,43 +1002,6 @@ socket.on('room_history', (history) => {
   messages.forEach(m => displayMessage(m));
 });
 
-// listen for generic error messages from server
-socket.on('error_message', (msg) => {
-  showNotification(msg, 'error');
-});
-
-socket.on('room_created', (data) => {
-  console.log('received room_created', data);
-  currentRoomCode = data.code;
-  isInRoom = true;
-  welcomeScreen.style.display = 'none';
-  chatContainer.style.display = 'block';
-  
-  roomName.textContent = data.roomName || 'Yeni Sohbet';
-  roomAvatar.textContent = (data.roomName || currentUsername).charAt(0).toUpperCase();
-  
-  messagesArea.innerHTML = '<div class="empty-state"><p style="text-align:center;">✨ Sohbet başladı!<br><small>Davet kodu: ' + data.code + '</small></p></div>';
-  showNotification(`Oda oluşturuldu! Kod: ${data.code}`, 'success');
-});
-
-socket.on('joined_room', (data) => {
-  console.log('received joined_room', data);
-  currentRoomCode = data.code;
-  isInRoom = true;
-  welcomeScreen.style.display = 'none';
-  chatContainer.style.display = 'block';
-  
-  socket.emit('get_room_info', { code: data.code });
-  showNotification(`Sohbete katıldın!`, 'success');
-  restoreDraft();
-});
-
-socket.on('room_history', (history) => {
-  messages = history || [];
-  messagesArea.innerHTML = '';
-  messages.forEach(m => displayMessage(m));
-});
-
 socket.on('room_info', (room) => {
   roomName.textContent = room.name || 'Sohbet';
   roomAvatar.textContent = room.name?.charAt(0).toUpperCase() || 'S';
