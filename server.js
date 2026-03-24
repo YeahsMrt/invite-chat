@@ -8,29 +8,54 @@ const fs = require('fs');
 
 const app = express();
 const server = http.createServer(app);
-const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || "http://localhost:3000";
 
+// Vercel deployment için environment variable
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000";
+
+// Socket.io konfigürasyonu - Vercel için güncellendi
 const io = new Server(server, {
   cors: {
-    origin: FRONTEND_ORIGIN,
+    origin: function (origin, callback) {
+      // Allow requests with no origin (mobile apps, curl, etc.)
+      if (!origin) return callback(null, true);
+
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "https://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://127.0.0.1:3000",
+        process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+        process.env.FRONTEND_ORIGIN
+      ].filter(Boolean);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.log('CORS blocked origin:', origin);
+      return callback(new Error('Not allowed by CORS'));
+    },
     methods: ["GET", "POST"],
     credentials: true,
-    allowedHeaders: ["Content-Type"]
+    allowedHeaders: ["Content-Type", "Authorization"]
   },
   transports: ['websocket', 'polling'],
-  serveClient: true
+  serveClient: true,
+  pingTimeout: 60000,
+  pingInterval: 25000
 });
 
 const sessionMiddleware = session({
-  secret: "supersecret2026",
+  secret: process.env.SESSION_SECRET || "supersecret2026",
   resave: false,
   saveUninitialized: true,
   cookie: {
-    secure: false,
+    secure: process.env.NODE_ENV === 'production', // HTTPS için secure cookie
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000,
-    sameSite: 'lax'
-  }
+    maxAge: 24 * 60 * 60 * 1000, // 24 saat
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+  },
+  store: process.env.NODE_ENV === 'production' ? undefined : undefined // Production'da default memory store kullan
 });
 
 app.use(express.static(path.join(__dirname, "public")));

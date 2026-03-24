@@ -1,6 +1,7 @@
 // avoid auto-connecting before user is authenticated
 // determine API URL (static fallback for localhost)
-const API_URL = (typeof window !== 'undefined' && (window._env_?.API_URL || window.CONFIG?.API_URL)) || "http://localhost:3000";
+const API_URL = (typeof window !== 'undefined' && (window._env_?.API_URL || window.CONFIG?.API_URL)) ||
+  (window.location.hostname === 'localhost' ? "http://localhost:3000" : window.location.origin);
 const socket = io(API_URL, { 
   autoConnect: false,
   reconnection: true,
@@ -35,7 +36,7 @@ const settings = {
   language: localStorage.getItem('language') || 'en'
 };
 
-// DOM Elements
+// DOM Elements (with null checks)
 const welcomeScreen = document.getElementById('welcomeScreen');
 const chatContainer = document.getElementById('chatContainer');
 const infoPanel = document.getElementById('infoPanel');
@@ -51,20 +52,32 @@ const roomAvatar = document.getElementById('roomAvatar');
 const membersList = document.getElementById('membersList');
 const memberCount = document.getElementById('memberCount');
 
-// Event Listeners for Welcome Buttons
+// Check if critical elements exist
+if (!welcomeScreen || !chatContainer || !usernameInput || !messageInput || !messagesArea) {
+  console.error('❌ Critical DOM elements not found! Check HTML structure.');
+}
+
+// Event Listeners for Welcome Buttons (with null checks)
 // the create/join buttons are shown only after authentication
-document.getElementById('createRoomBtn').addEventListener('click', showCreateForm);
-document.getElementById('joinRoomBtn').addEventListener('click', showJoinForm);
-document.getElementById('confirmCreateBtn').addEventListener('click', createRoom);
-document.getElementById('confirmJoinBtn').addEventListener('click', joinRoom);
-document.getElementById('cancelCreateBtn').addEventListener('click', hideForm);
-document.getElementById('cancelJoinBtn').addEventListener('click', hideForm);
+const createRoomBtn = document.getElementById('createRoomBtn');
+const joinRoomBtn = document.getElementById('joinRoomBtn');
+const confirmCreateBtn = document.getElementById('confirmCreateBtn');
+const confirmJoinBtn = document.getElementById('confirmJoinBtn');
+const cancelCreateBtn = document.getElementById('cancelCreateBtn');
+const cancelJoinBtn = document.getElementById('cancelJoinBtn');
+
+if (createRoomBtn) createRoomBtn.addEventListener('click', showCreateForm);
+if (joinRoomBtn) joinRoomBtn.addEventListener('click', showJoinForm);
+if (confirmCreateBtn) confirmCreateBtn.addEventListener('click', createRoom);
+if (confirmJoinBtn) confirmJoinBtn.addEventListener('click', joinRoom);
+if (cancelCreateBtn) cancelCreateBtn.addEventListener('click', hideForm);
+if (cancelJoinBtn) cancelJoinBtn.addEventListener('click', hideForm);
 
 // authentication buttons
 const registerBtn = document.getElementById('registerBtn');
 const loginBtn = document.getElementById('loginBtn');
-registerBtn.addEventListener('click', handleRegister);
-loginBtn.addEventListener('click', handleLogin);
+if (registerBtn) registerBtn.addEventListener('click', handleRegister);
+if (loginBtn) loginBtn.addEventListener('click', handleLogin);
 
 // logout
 const logoutBtn = document.getElementById('logoutBtn');
@@ -87,20 +100,32 @@ let localStream = null;
 let callTarget = null;
 
 
-// Chat Button Listeners  
-document.getElementById('sendBtn').addEventListener('click', sendMessage);
-document.getElementById('infoBtn').addEventListener('click', toggleInfoPanel);
-document.getElementById('closeInfoBtn').addEventListener('click', toggleInfoPanel);
-document.getElementById('searchMsgBtn').addEventListener('click', toggleSearchBar);
-document.getElementById('closeSearchBtn').addEventListener('click', toggleSearchBar);
-document.getElementById('emojiBtn').addEventListener('click', showEmojiPicker);
-document.getElementById('imageBtn').addEventListener('click', handleImageUpload);
-document.getElementById('stickerBtn').addEventListener('click', showStickerPicker);
-document.getElementById('voiceBtn').addEventListener('click', handleVoiceMessage);
-document.getElementById('callBtn').addEventListener('click', simulateCall);
+// Chat Button Listeners (with null checks)
+const sendBtn = document.getElementById('sendBtn');
+const infoBtn = document.getElementById('infoBtn');
+const closeInfoBtn = document.getElementById('closeInfoBtn');
+const searchMsgBtn = document.getElementById('searchMsgBtn');
+const closeSearchBtn = document.getElementById('closeSearchBtn');
+const emojiBtn = document.getElementById('emojiBtn');
+const imageBtn = document.getElementById('imageBtn');
+const stickerBtn = document.getElementById('stickerBtn');
+const voiceBtn = document.getElementById('voiceBtn');
+const callBtn = document.getElementById('callBtn');
+
+if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+if (infoBtn) infoBtn.addEventListener('click', toggleInfoPanel);
+if (closeInfoBtn) closeInfoBtn.addEventListener('click', toggleInfoPanel);
+if (searchMsgBtn) searchMsgBtn.addEventListener('click', toggleSearchBar);
+if (closeSearchBtn) closeSearchBtn.addEventListener('click', toggleSearchBar);
+if (emojiBtn) emojiBtn.addEventListener('click', showEmojiPicker);
+if (imageBtn) imageBtn.addEventListener('click', handleImageUpload);
+if (stickerBtn) stickerBtn.addEventListener('click', showStickerPicker);
+if (voiceBtn) voiceBtn.addEventListener('click', handleVoiceMessage);
+if (callBtn) callBtn.addEventListener('click', simulateCall);
 
 document.getElementById('sidebarToggle')?.addEventListener('click', () => {
   document.querySelector('.chat-sidebar').classList.toggle('collapsed');
+  setTimeout(updateComposerPosition, 300); // wait for transition
 });
 
 // drag-drop attachments
@@ -133,6 +158,9 @@ messageInput.addEventListener('input', () => {
   if (currentRoomCode) {
     localStorage.setItem('draft_' + currentRoomCode, messageInput.value);
   }
+  // Auto-resize textarea
+  messageInput.style.height = 'auto';
+  messageInput.style.height = Math.min(messageInput.scrollHeight, 100) + 'px';
 });
 
 messageInput.addEventListener('input', () => {
@@ -149,11 +177,23 @@ function init() {
   if (settings.darkMode) enableDarkMode();
   initializeEmojiGrid();
   initializeStickerGrid();
+  updateComposerPosition();
   socket.emit('get_python_environment_details');
   checkSession();
   requestNotificationPermission();
   registerServiceWorker();
 }
+
+function updateComposerPosition() {
+  const sidebar = document.querySelector('.chat-sidebar');
+  const composer = document.querySelector('.message-composer');
+  if (sidebar && composer) {
+    const sidebarWidth = sidebar.offsetWidth;
+    composer.style.left = sidebarWidth + 'px';
+  }
+}
+
+window.addEventListener('resize', updateComposerPosition);
 
 // service worker registration
 function registerServiceWorker() {
@@ -344,6 +384,8 @@ function handleLogin() {
     return;
   }
   fetch('/login', {
+
+    
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ username, password })
@@ -372,9 +414,11 @@ function checkSession() {
 
 function afterAuth(username) {
   currentUsername = username;
-  usernameInput.value = username;
-  document.getElementById('authSection').style.display = 'none';
-  document.getElementById('roomSection').style.display = 'block';
+  if (usernameInput) usernameInput.value = username;
+  const authSection = document.getElementById('authSection');
+  const roomSection = document.getElementById('roomSection');
+  if (authSection) authSection.style.display = 'none';
+  if (roomSection) roomSection.style.display = 'block';
   // connect socket now that we have a session
   if (!socket.connected) socket.connect();
 }
@@ -385,8 +429,10 @@ function showCreateForm() {
     showNotification('Önce giriş yapmalısın.', 'error');
     return;
   }
-  document.getElementById('createForm').style.display = 'block';
-  document.getElementById('joinForm').style.display = 'none';
+  const createForm = document.getElementById('createForm');
+  const joinForm = document.getElementById('joinForm');
+  if (createForm) createForm.style.display = 'block';
+  if (joinForm) joinForm.style.display = 'none';
 }
 
 // handle draft restoration
@@ -402,13 +448,17 @@ function showJoinForm() {
     showNotification('Önce giriş yapmalısın.', 'error');
     return;
   }
-  document.getElementById('joinForm').style.display = 'block';
-  document.getElementById('createForm').style.display = 'none';
+  const joinForm = document.getElementById('joinForm');
+  const createForm = document.getElementById('createForm');
+  if (joinForm) joinForm.style.display = 'block';
+  if (createForm) createForm.style.display = 'none';
 }
 
 function hideForm() {
-  document.getElementById('createForm').style.display = 'none';
-  document.getElementById('joinForm').style.display = 'none';
+  const createForm = document.getElementById('createForm');
+  const joinForm = document.getElementById('joinForm');
+  if (createForm) createForm.style.display = 'none';
+  if (joinForm) joinForm.style.display = 'none';
 }
 
 // Room Functions
@@ -487,9 +537,16 @@ function joinRoom() {
 
 // Chat Functions
 async function sendMessage() {
+  if (!messageInput) return;
   let message = messageInput.value.trim();
   if (!message && !attachedFile) return;
-  message = await encryptText(message);
+  
+  try {
+    message = await encryptText(message);
+  } catch (error) {
+    console.error('Encryption error:', error);
+    // Continue with unencrypted message if encryption fails
+  }
   
   const payload = {
     message,
@@ -501,9 +558,11 @@ async function sendMessage() {
   socket.emit('send_message', payload);
   
   messageInput.value = '';
+  messageInput.style.height = 'auto';
   attachedFile = null;
-  document.getElementById('replyContainer').style.display = 'none';
-  messageInput.focus();
+  const replyContainer = document.getElementById('replyContainer');
+  if (replyContainer) replyContainer.style.display = 'none';
+  if (messageInput) messageInput.focus({ preventScroll: true });
 }
 
 let attachedFile = null;
@@ -584,9 +643,11 @@ function displayMessage(msg) {
     showContextMenu(e, msg.id, isOwn);
   });
   
-  messagesArea.appendChild(div);
-  updateMessageReactions(msg);
-  scrollToBottom();
+  if (messagesArea) {
+    messagesArea.appendChild(div);
+    updateMessageReactions(msg);
+    scrollToBottom();
+  }
 }
 
 function updateMessageReactions(msg) {
@@ -611,7 +672,9 @@ function formatTime(isoString) {
 }
 
 function scrollToBottom() {
-  messagesArea.scrollTop = messagesArea.scrollHeight;
+  if (messagesArea) {
+    messagesArea.scrollTop = messagesArea.scrollHeight;
+  }
 }
 
 function escapeHtml(text) {
@@ -776,13 +839,17 @@ function updateViewOnce(msgId) {
 
 // Info Panel
 function toggleInfoPanel() {
-  infoPanel.classList.toggle('active');
+  if (infoPanel) {
+    infoPanel.classList.toggle('active');
+  }
 }
 
 // Search Bar
 function toggleSearchBar() {
   const searchContainer = document.getElementById('searchBarContainer');
-  searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+  if (searchContainer) {
+    searchContainer.style.display = searchContainer.style.display === 'none' ? 'block' : 'none';
+  }
 }
 
 document.getElementById('messageSearch')?.addEventListener('input', (e) => {
@@ -1031,20 +1098,27 @@ socket.on('room_info', (room) => {
 });
 
 socket.on('receive_message', async (msg) => {
-  // decrypt message if necessary
-  msg.message = await decryptText(msg.message);
-  messages.push(msg);
-  displayMessage(msg);
-  
-  if (msg.userId !== currentUserId) {
-    if (settings.sound) playNotificationSound();
-    if (msg.message && currentUsername && msg.message.includes('@' + currentUsername)) {
-      showNotification('Sana mesaj atıldı', 'info');
-      showDesktopNotification('Mention', `${msg.username} seni etiketledi`);
+  try {
+    // decrypt message if necessary
+    msg.message = await decryptText(msg.message);
+    messages.push(msg);
+    displayMessage(msg);
+    
+    if (msg.userId !== currentUserId) {
+      if (settings.sound) playNotificationSound();
+      if (msg.message && currentUsername && msg.message.includes('@' + currentUsername)) {
+        showNotification('Sana mesaj atıldı', 'info');
+        showDesktopNotification('Mention', `${msg.username} seni etiketledi`);
+      }
+      if (document.hidden) {
+        showDesktopNotification('Yeni mesaj', `${msg.username}: ${msg.message || msg.file?.name || ''}`);
+      }
     }
-    if (document.hidden) {
-      showDesktopNotification('Yeni mesaj', `${msg.username}: ${msg.message || msg.file?.name || ''}`);
-    }
+  } catch (error) {
+    console.error('Message receive error:', error);
+    // Still display the message even if decryption fails
+    messages.push(msg);
+    displayMessage(msg);
   }
 });
 

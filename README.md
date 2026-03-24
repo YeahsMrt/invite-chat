@@ -29,11 +29,7 @@ Gerçek zamanlı, davet kodu tabanlı modern bir sohbet uygulaması.
 
 ## 🚀 Kurulum & Başlatma
 
-### Gereksinimler
-- Node.js 16+ 
-- npm veya yarn
-
-### Adımlar
+### Yerel Geliştirme
 ```bash
 # Proje dizinine gir
 cd invite-chat
@@ -44,9 +40,115 @@ npm install
 # Sunucuyu başlat
 npm start
 
-# Tarayıcı otomatik açılmaz, aşağıdaki adrese git:
-# http://localhost:3000
+# Tarayıcıda aç: http://localhost:3000
 ```
+
+### Vercel Deployment
+
+#### 1. Vercel Hesabı Oluştur
+[Vercel.com](https://vercel.com)'a git ve ücretsiz hesap oluştur.
+
+#### 2. Projeyi GitHub'a Yükle
+```bash
+# Git repository oluştur
+git init
+git add .
+git commit -m "Initial commit"
+
+# GitHub repository oluştur ve push et
+# (GitHub web arayüzünden veya GitHub CLI ile)
+```
+
+#### 3. Vercel'de Deploy Et
+```bash
+# Vercel CLI yükle (global)
+npm i -g vercel
+
+# Vercel'e giriş yap
+vercel login
+
+# Projeyi deploy et
+vercel
+
+# Production'a deploy et
+vercel --prod
+```
+
+#### 4. Environment Variables Ayarla
+Vercel dashboard'dan veya CLI ile environment variables ekle:
+```bash
+vercel env add SESSION_SECRET
+# Rastgele güçlü bir şifre gir (örn: openssl rand -base64 32)
+
+vercel env add NODE_ENV
+# production
+```
+
+#### 5. Domain Ayarla (İsteğe bağlı)
+Vercel dashboard'dan custom domain ekleyebilirsin.
+
+## 🔧 Konfigürasyon
+
+### Environment Variables
+`.env.example` dosyasını kopyala ve `.env` olarak düzenle:
+
+```env
+SESSION_SECRET=your-super-secret-session-key-here
+FRONTEND_ORIGIN=https://your-app.vercel.app
+NODE_ENV=production
+```
+
+### Port Ayarı
+Varsayılan port 3000. Farklı port için:
+```bash
+PORT=8080 npm start
+```
+
+## 📱 Kullanım
+
+1. **Kayıt/Giriş**: Kullanıcı adı ve şifre ile hesap oluştur/giriş yap
+2. **Oda Oluştur**: Yeni sohbet odası oluştur (davet kodu otomatik oluşur)
+3. **Odaya Katıl**: Başkalarının davet kodu ile sohbete katıl
+4. **Mesaj Gönder**: Gerçek zamanlı mesajlaşma
+5. **Dosya Paylaş**: Resim, doküman vb. dosyaları paylaş
+6. **Emoji/Reaksiyon**: Mesajlara emoji ile tepki ver
+
+## 🛠️ Teknoloji Stack
+
+- **Backend**: Node.js, Express.js, Socket.io
+- **Frontend**: Vanilla JavaScript, Bootstrap 5, HTML5
+- **Real-time**: WebSocket (Socket.io)
+- **Authentication**: bcrypt, express-session
+- **Storage**: JSON file (development), Database (production)
+- **Deployment**: Vercel, Heroku, DigitalOcean
+
+## 📄 API Endpoints
+
+- `POST /register` - Kullanıcı kaydı
+- `POST /login` - Kullanıcı girişi
+- `POST /logout` - Çıkış
+- `GET /session` - Oturum kontrolü
+
+## 🔌 Socket Events
+
+- `create_room` - Oda oluştur
+- `join_room` - Odaya katıl
+- `send_message` - Mesaj gönder
+- `receive_message` - Mesaj al
+- `emoji_reaction` - Emoji tepkisi
+- `typing` / `typing_stop` - Yazma göstergesi
+
+## 🤝 Katkıda Bulunma
+
+1. Fork et
+2. Feature branch oluştur (`git checkout -b feature/amazing-feature`)
+3. Commit et (`git commit -m 'Add amazing feature'`)
+4. Push et (`git push origin feature/amazing-feature`)
+5. Pull Request aç
+
+## 📄 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır.
 
 ## 📚 Kullanım
 

@@ -211,6 +211,7 @@ body.dark-mode .rooms-list::-webkit-scrollbar-thumb {
   display: flex;
   flex-direction: column;
   background: var(--light-bg);
+  position: relative;
 }
 
 body.dark-mode .chat-main {
@@ -447,8 +448,15 @@ body.dark-mode .typing-indicator {
   border-top: 1px solid #e5ddd3;
   padding: 12px 24px;
   display: flex;
-  gap: 12px;
-  align-items: flex-end;
+  flex-direction: column;
+  gap: 8px;
+  position: fixed;
+  bottom: 0;
+  left: 360px;
+  right: 0;
+  z-index: 1000;
+  max-height: 200px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
 
 body.dark-mode .message-composer {
@@ -465,7 +473,7 @@ body.dark-mode .message-composer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin: 0;
 }
 
 .reply-content {
@@ -493,6 +501,7 @@ body.dark-mode .reply-content p {
 .composer-actions {
   display: flex;
   gap: 8px;
+  align-items: center;
 }
 
 .btn-action {
@@ -520,6 +529,8 @@ body.dark-mode .btn-action:hover {
 .composer-input {
   flex: 1;
   display: flex;
+  width: 100%;
+  align-items: flex-end;
 }
 
 .composer-input textarea {
